@@ -31,6 +31,7 @@ async function run() {
 
     const database = client.db('Style-Market');
     const userCollection = database.collection('Users');
+    const productCollection = database.collection('store-product');
     // await client.db('admin').command({ ping: 1 });
     app.post('/sign-user', async (req, res) => {
       const usrInfo = req.body;
@@ -48,11 +49,15 @@ async function run() {
       const qurey = { email: usrInfo.email };
       const isExist = await userCollection.findOne(qurey);
       if (!isExist) {
-        const result = await userCollection.insertOne();
+        const result = await userCollection.insertOne(usrInfo);
         res.send(result);
       } else {
         return res.send({ message: 'user alredy exist' });
       }
+    });
+    app.get('/product-data', async (req, res) => {
+      const result = await productCollection.find().toArray();
+      res.send(result);
     });
 
     console.log(
