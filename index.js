@@ -97,6 +97,21 @@ async function run() {
         .toArray();
       res.send(result);
     });
+
+    app.get('/price-lowest', async (req, res) => {
+      const result = await productCollection
+        .find()
+        .sort({ Price: 1 })
+        .toArray();
+      res.send(result);
+    });
+    app.get('/price-higest', async (req, res) => {
+      const result = await productCollection
+        .find()
+        .sort({ Price: -1 })
+        .toArray();
+      res.send(result);
+    });
     console.log(
       'Pinged your deployment. You successfully connected to MongoDB!'
     );
