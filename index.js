@@ -38,7 +38,7 @@ async function run() {
       const qurey = { email: usrInfo.email };
       const isExist = await userCollection.findOne(qurey);
       if (!isExist) {
-        const result = await userCollection.insertOne();
+        const result = await userCollection.insertOne(usrInfo);
         res.send(result);
       } else {
         return res.send({ message: 'user alredy exist' });
@@ -64,6 +64,14 @@ async function run() {
         ProductName: { $regex: req.query.search, $options: 'i' },
       };
 
+      const result = await productCollection.find(qurey).toArray();
+      res.send(result);
+    });
+
+    app.get('/brand-name', async (req, res) => {
+      const qurey = {
+        BrandName: req.query.brand,
+      };
       const result = await productCollection.find(qurey).toArray();
       res.send(result);
     });
