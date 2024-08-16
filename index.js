@@ -75,6 +75,14 @@ async function run() {
       const result = await productCollection.find(qurey).toArray();
       res.send(result);
     });
+    app.get('/category-name', async (req, res) => {
+      console.log(req.query.category);
+      const qurey = {
+        Category: req.query.category,
+      };
+      const result = await productCollection.find(qurey).toArray();
+      res.send(result);
+    });
 
     console.log(
       'Pinged your deployment. You successfully connected to MongoDB!'
