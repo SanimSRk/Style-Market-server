@@ -83,7 +83,20 @@ async function run() {
       const result = await productCollection.find(qurey).toArray();
       res.send(result);
     });
-
+    app.get('/product-count', async (req, res) => {
+      const result = await productCollection.estimatedDocumentCount();
+      res.send({ result });
+    });
+    app.get('/product-pagenation', async (req, res) => {
+      const pages = parseInt(req.query.page);
+      const size = parseInt(req.query.size);
+      const result = await productCollection
+        .find()
+        .skip(pages * size)
+        .limit(size)
+        .toArray();
+      res.send(result);
+    });
     console.log(
       'Pinged your deployment. You successfully connected to MongoDB!'
     );
