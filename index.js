@@ -59,6 +59,14 @@ async function run() {
       const result = await productCollection.find().toArray();
       res.send(result);
     });
+    app.get('/search-products', async (req, res) => {
+      const qurey = {
+        ProductName: { $regex: req.query.search, $options: 'i' },
+      };
+
+      const result = await productCollection.find(qurey).toArray();
+      res.send(result);
+    });
 
     console.log(
       'Pinged your deployment. You successfully connected to MongoDB!'
