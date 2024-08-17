@@ -126,6 +126,14 @@ async function run() {
         .toArray();
       res.send(result);
     });
+    app.get('/product-priceSort', async (req, res) => {
+      const mainPrice = parseFloat(req.query.main);
+      const maxPrice = parseFloat(req.query.max);
+      const qurey = { Price: { $gte: mainPrice, $lte: maxPrice } };
+      const result = await productCollection.find(qurey).toArray();
+      res.send(result);
+    });
+
     console.log(
       'Pinged your deployment. You successfully connected to MongoDB!'
     );
