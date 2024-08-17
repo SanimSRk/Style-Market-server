@@ -6,7 +6,11 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'https://style-market-87e45.web.app'],
+  })
+);
 
 app.get('/', async (req, res) => {
   res.send('Style-Market server is runing');
@@ -26,7 +30,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     // Send a ping to confirm a successful connection
 
     const database = client.db('Style-Market');
